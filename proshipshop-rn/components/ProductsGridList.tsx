@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   productContainer: {
-    width: "48%",
+    width: "48.9%",
     borderWidth: 0.6,
     borderColor: Colors.light.tint,
     padding: 12,

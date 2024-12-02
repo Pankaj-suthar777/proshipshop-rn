@@ -37,7 +37,7 @@ const ProductScreen: FC<Props> = (props) => {
         <View style={styles.contentContainer}>
           <View style={styles.row}>
             <Text style={styles.productName}>{product.name}</Text>
-            <Ionicons name="heart-outline" size={20} style={styles.heartIcon} />
+            <Ionicons name="heart-outline" size={24} style={styles.heartIcon} />
           </View>
           <View style={styles.ratingContainer}>
             {[1, 2, 3, 4, 5].map((_, i) => (
@@ -95,7 +95,7 @@ const ProductScreen: FC<Props> = (props) => {
               </View>
             ))}
           </View>
-          <ReviewSection />
+          <ReviewSection reviews={product.reviews} />
         </View>
       </ScrollView>
     </SafeAreaView>

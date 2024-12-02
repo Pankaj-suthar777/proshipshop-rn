@@ -1,26 +1,9 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, FlatList } from "react-native";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
+import { ProductReview } from "@/data/data";
 
-const ReviewSection = () => {
-  const reviews = [
-    {
-      id: 1,
-      name: "James Lawson",
-      profileImage: "https://via.placeholder.com/50",
-      rating: 5,
-      reviewText:
-        "Air Max are always very comfortable fit, clean and just perfect in every way. Just the box was too small and scrunched the sneakers up a little bit, not sure if the box was always this small but the 90s are and will always be one of my favorites.",
-      date: "December 10, 2016",
-      images: [
-        require("@/assets/shoes/10.png"),
-        require("@/assets/shoes/20.png"),
-        require("@/assets/shoes/30.png"),
-        require("@/assets/shoes/40.png"),
-      ],
-    },
-  ];
-
+const ReviewSection = ({ reviews }: { reviews: ProductReview[] }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -39,14 +22,14 @@ const ReviewSection = () => {
       </View>
 
       {reviews.map((review) => (
-        <View key={review.id} style={styles.reviewCard}>
+        <View key={review.user} style={styles.reviewCard}>
           <View style={styles.reviewHeader}>
             <Image
-              source={{ uri: review.profileImage }}
+              source={{ uri: "https://via.placeholder.com/50" }}
               style={styles.profileImage}
             />
             <View>
-              <Text style={styles.reviewerName}>{review.name}</Text>
+              <Text style={styles.reviewerName}>{review.user}</Text>
               <View style={styles.ratingStars}>
                 {[...Array(5)].map((_, index) => (
                   <AntDesign
@@ -59,7 +42,7 @@ const ReviewSection = () => {
               </View>
             </View>
           </View>
-          <Text style={styles.reviewText}>{review.reviewText}</Text>
+          <Text style={styles.reviewText}>{review.comment}</Text>
 
           <FlatList
             horizontal
@@ -71,7 +54,7 @@ const ReviewSection = () => {
               <Image style={styles.reviewImage} source={item} />
             )}
           />
-          <Text style={styles.reviewDate}>{review.date}</Text>
+          <Text style={styles.reviewDate}>{"December 10, 2016"}</Text>
         </View>
       ))}
     </View>
