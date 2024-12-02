@@ -15,6 +15,7 @@ import CarouselProductGallery from "@/components/CarouselProductGallery";
 import Colors from "@/constants/Colors";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import ReviewSection from "@/components/ReviewSection";
+import ProductsHorizontalList from "@/components/ProductsHorizontalList";
 
 interface Props {}
 
@@ -96,6 +97,13 @@ const ProductScreen: FC<Props> = (props) => {
             ))}
           </View>
           <ReviewSection reviews={product.reviews} />
+          <Text style={styles.headerText}>You Might also Like</Text>
+          <ProductsHorizontalList products={productsShoes} />
+          <View style={{ marginVertical: 24 }}>
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.buttonText}>Add To Cart</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -106,6 +114,12 @@ const styles = StyleSheet.create({
   safeArea: {
     backgroundColor: "white",
     flex: 1,
+  },
+  headerText: {
+    marginTop: 24,
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
   },
   contentContainer: {
     marginHorizontal: 12,
@@ -181,6 +195,18 @@ const styles = StyleSheet.create({
   specValue: {
     color: "#555",
     fontSize: 14,
+  },
+  button: {
+    backgroundColor: Colors.light.tint,
+    height: 60,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 8,
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "600",
+    letterSpacing: 0.8,
   },
 });
 
