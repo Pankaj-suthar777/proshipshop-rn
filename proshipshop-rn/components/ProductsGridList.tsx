@@ -2,6 +2,7 @@ import {
   Dimensions,
   Image,
   ImageProps,
+  Pressable,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -11,6 +12,7 @@ import React from "react";
 import Colors from "@/constants/Colors";
 import { Product } from "@/data/data";
 import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 
 interface Props {
   products: Product[];
@@ -18,6 +20,7 @@ interface Props {
 
 const ProductsGridList = ({ products }: Props) => {
   const width = Dimensions.get("window").width;
+  const router = useRouter();
 
   return (
     <View style={styles.container}>
@@ -28,20 +31,28 @@ const ProductsGridList = ({ products }: Props) => {
           );
 
           return (
-            <View
+            <TouchableOpacity
+              onPress={() =>
+                router.push({
+                  pathname: "/(products)/[productId]",
+                  params: {
+                    productId: item.id,
+                  },
+                })
+              }
               key={item.id}
-              style={[styles.productContainer, { height: width / 1.4 }]}
+              style={[styles.productContainer, { height: width / 1.2 }]}
             >
-              <TouchableOpacity style={styles.productImageContainer}>
+              <View style={styles.productImageContainer}>
                 <Image
                   style={styles.productImage}
                   source={item.image as ImageProps}
                 />
-              </TouchableOpacity>
+              </View>
 
-              <TouchableOpacity>
+              <View>
                 <Text style={styles.productName}>{item.name}</Text>
-              </TouchableOpacity>
+              </View>
               <View style={styles.ratingContainer}>
                 {[1, 2, 3, 4, 5].map((_, i) => (
                   <Ionicons key={i} name="star" color={"#FFBF00"} size={16} />
@@ -56,7 +67,7 @@ const ProductsGridList = ({ products }: Props) => {
                   {discountPercentage}% Off
                 </Text>
               </View>
-            </View>
+            </TouchableOpacity>
           );
         })}
       </View>

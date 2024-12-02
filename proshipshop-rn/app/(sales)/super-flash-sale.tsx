@@ -20,7 +20,7 @@ const SuperFlashSaleScreen: FC<Props> = (props) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView>
-        <HeaderComponent />
+        <HeaderComponent text="Super Flash Sale" />
 
         <View style={{ paddingHorizontal: 16 }}>
           <Image
@@ -41,7 +41,7 @@ const SuperFlashSaleScreen: FC<Props> = (props) => {
   );
 };
 
-const HeaderComponent = () => {
+export const HeaderComponent = ({ text }: { text: string }) => {
   const router = useRouter();
   return (
     <View
@@ -70,7 +70,7 @@ const HeaderComponent = () => {
               marginLeft: 16,
             }}
           >
-            Super Flash Sale
+            {text}
           </Text>
         </View>
         <View>
