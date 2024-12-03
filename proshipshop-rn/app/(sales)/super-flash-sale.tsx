@@ -41,7 +41,13 @@ const SuperFlashSaleScreen: FC<Props> = (props) => {
   );
 };
 
-export const HeaderComponent = ({ text }: { text: string }) => {
+export const HeaderComponent = ({
+  text,
+  showSearch = true,
+}: {
+  text: string;
+  showSearch?: boolean;
+}) => {
   const router = useRouter();
   return (
     <View
@@ -73,9 +79,11 @@ export const HeaderComponent = ({ text }: { text: string }) => {
             {text}
           </Text>
         </View>
-        <View>
-          <Feather name="search" color={Colors.light.icon} size={28} />
-        </View>
+        {showSearch && (
+          <View>
+            <Feather name="search" color={Colors.light.icon} size={28} />
+          </View>
+        )}
       </View>
     </View>
   );

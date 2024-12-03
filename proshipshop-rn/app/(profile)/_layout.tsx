@@ -4,8 +4,9 @@ import { Stack } from "expo-router";
 export default function AuthLayout() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="[productId].tsx" />
-      <Stack.Screen name="categories" />
+      <Stack.Screen name="profile" />
+      <Stack.Screen name="address" />
+      <Stack.Screen name="payment" />
     </Stack>
   );
 }

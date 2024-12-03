@@ -3,13 +3,23 @@ import React from "react";
 import Colors from "@/constants/Colors";
 import { FlatList } from "react-native";
 import { categories } from "@/data/data";
+import { useRouter } from "expo-router";
 
 const CategoryRow = () => {
+  const router = useRouter();
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Category</Text>
-        <Text style={styles.headerMore}>More Category</Text>
+        <TouchableOpacity
+          onPress={() =>
+            router.push({
+              pathname: "/(products)/categories",
+            })
+          }
+        >
+          <Text style={styles.headerMore}>More Category</Text>
+        </TouchableOpacity>
       </View>
       <FlatList
         horizontal
