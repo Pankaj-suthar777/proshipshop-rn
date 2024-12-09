@@ -11,7 +11,7 @@ import { useLocalSearchParams } from "expo-router";
 import { productsShoes } from "@/data/data";
 import CarouselProductGallery from "@/components/products/CarouselProductGallery";
 import Colors from "@/constants/Colors";
-import { AntDesign, Ionicons } from "@expo/vector-icons";
+import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
 import ReviewSection from "@/components/ReviewSection";
 import ProductsHorizontalList from "@/components/products/ProductsHorizontalList";
 import HeaderComponent from "@/components/layout/HeaderComponent";
@@ -35,7 +35,12 @@ const ProductScreen = () => {
         <View style={styles.contentContainer}>
           <View style={styles.row}>
             <Text style={styles.productName}>{product.name}</Text>
-            <Ionicons name="heart-outline" size={24} style={styles.heartIcon} />
+            <Feather
+              name="heart"
+              size={24}
+              style={styles.heartIcon}
+              color={Colors.light.tabIconDefault}
+            />
           </View>
           <View style={styles.ratingContainer}>
             {[1, 2, 3, 4, 5].map((_, i) => (

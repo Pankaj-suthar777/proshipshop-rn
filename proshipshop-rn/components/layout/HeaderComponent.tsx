@@ -1,7 +1,7 @@
 import Colors from "@/constants/Colors";
 import { Feather } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, Text, TouchableOpacity, View } from "react-native";
 
 const HeaderComponent = ({
   text,
@@ -42,9 +42,11 @@ const HeaderComponent = ({
           </Text>
         </View>
         {showSearch && (
-          <View>
+          <TouchableOpacity
+            onPress={() => router.push({ pathname: "/(products)/search" })}
+          >
             <Feather name="search" color={Colors.light.icon} size={28} />
-          </View>
+          </TouchableOpacity>
         )}
       </View>
     </View>

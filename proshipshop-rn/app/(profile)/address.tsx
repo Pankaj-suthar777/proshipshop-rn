@@ -10,6 +10,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HeaderComponent from "@/components/layout/HeaderComponent";
 import Colors from "@/constants/Colors";
+import { useRouter } from "expo-router";
 
 const addresses = [
   {
@@ -59,6 +60,8 @@ const AddressScreen = () => {
     </View>
   );
 
+  const router = useRouter();
+
   return (
     <SafeAreaView style={styles.container}>
       <HeaderComponent text="Address" showSearch={false} />
@@ -68,7 +71,10 @@ const AddressScreen = () => {
         renderItem={renderItem}
         contentContainerStyle={styles.list}
       />
-      <TouchableOpacity style={styles.addButton}>
+      <TouchableOpacity
+        style={styles.addButton}
+        onPress={() => router.push({ pathname: "/(profile)/add-address" })}
+      >
         <Ionicons name="add-circle" size={24} color="white" />
         <Text style={styles.addButtonText}>Add Address</Text>
       </TouchableOpacity>
