@@ -122,13 +122,14 @@ const styles = StyleSheet.create({
   },
   categoryList: {
     paddingHorizontal: 16,
-    justifyContent: "space-between",
+
+    justifyContent: "center",
   },
   categoryItem: {
     alignItems: "center",
     justifyContent: "center",
     margin: 8,
-    width: "20%",
+    width: "18%",
   },
   categoryText: {
     marginTop: 8,
@@ -137,8 +138,8 @@ const styles = StyleSheet.create({
     color: "#666",
   },
   iconContainer: {
-    height: 70,
-    width: 70,
+    height: 60,
+    width: 60,
     borderWidth: 0.8,
     borderColor: Colors.light.tint,
     borderRadius: 30,

@@ -9,6 +9,7 @@ export default function ProfileLayout() {
       <Stack.Screen name="payment" />
       <Stack.Screen name="notifications" />
       <Stack.Screen name="favoirite-products" />
+      <Stack.Screen name="orders" />
     </Stack>
   );
 }

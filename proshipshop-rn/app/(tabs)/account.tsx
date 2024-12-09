@@ -20,7 +20,13 @@ const AccountScreen = () => {
       library: Feather,
       onPress: () => router.push({ pathname: "/(profile)/profile" }),
     },
-    { id: 2, title: "Order", icon: "package", library: Feather },
+    {
+      id: 2,
+      title: "Order",
+      icon: "package",
+      library: Feather,
+      onPress: () => router.push({ pathname: "/(profile)/orders" }),
+    },
     {
       id: 3,
       title: "Address",

@@ -2,6 +2,7 @@ import {
   Image,
   ScrollView,
   StyleSheet,
+  Text,
   TextInput,
   TouchableOpacity,
 } from "react-native";
@@ -56,6 +57,7 @@ const SearchInputHeader = () => {
             color={Colors.light.tint || "#000"}
             size={24}
           />
+          {/* <Text></Text> */}
           <TextInput
             onPress={() => router.push({ pathname: "/(products)/search" })}
             placeholder="Search Product"

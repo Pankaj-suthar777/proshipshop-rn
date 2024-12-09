@@ -19,6 +19,7 @@ import { Controller, useForm } from "react-hook-form";
 import client from "@/api/client";
 import { Keys, saveToAsyncStorage } from "@/utils/asyncStorage";
 import { useAuthStore } from "@/store/authStore";
+import { Notifier, Easing, NotifierComponents } from "react-native-notifier";
 
 const formSchema = z
   .object({
@@ -70,8 +71,19 @@ const RegisterScreen = () => {
 
       router.replace("/(tabs)/");
     } catch (error: any) {
-      console.log(error);
       const errorMessage = error.response?.data?.detail;
+      Notifier.showNotification({
+        title: "Error",
+        description: errorMessage ? errorMessage : error.message,
+        duration: 0,
+        showAnimationDuration: 800,
+        showEasing: Easing.bounce,
+        hideOnPress: false,
+        Component: NotifierComponents.Alert,
+        componentProps: {
+          alertType: "error",
+        },
+      });
     }
   };
 

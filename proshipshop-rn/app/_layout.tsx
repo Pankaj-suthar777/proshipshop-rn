@@ -12,11 +12,9 @@ import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { NotifierWrapper } from "react-native-notifier";
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from "expo-router";
+export { ErrorBoundary } from "expo-router";
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
@@ -56,13 +54,15 @@ function RootLayoutNav() {
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <GestureHandlerRootView>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-          <Stack.Screen name="(sales)" options={{ headerShown: false }} />
-          <Stack.Screen name="(products)" options={{ headerShown: false }} />
-          <Stack.Screen name="(profile)" options={{ headerShown: false }} />
-        </Stack>
+        <NotifierWrapper>
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+            <Stack.Screen name="(sales)" options={{ headerShown: false }} />
+            <Stack.Screen name="(products)" options={{ headerShown: false }} />
+            <Stack.Screen name="(profile)" options={{ headerShown: false }} />
+          </Stack>
+        </NotifierWrapper>
       </GestureHandlerRootView>
     </ThemeProvider>
   );
