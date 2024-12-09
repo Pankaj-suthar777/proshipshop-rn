@@ -6,6 +6,8 @@ export default function AuthLayout() {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="[productId].tsx" />
       <Stack.Screen name="categories" />
+      <Stack.Screen name="more-reviews" />
+      <Stack.Screen name="write-review" />
     </Stack>
   );
 }

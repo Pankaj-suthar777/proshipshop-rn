@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
+import HeaderComponent from "@/components/layout/HeaderComponent";
+import Colors from "@/constants/Colors";
 
 const addresses = [
   {
@@ -19,6 +21,20 @@ const addresses = [
   },
   {
     id: "2",
+    name: "Ahmad Khaidir",
+    address:
+      "3711 Spring Hill Rd undefined Tallahassee, Nevada 52874 United States",
+    phone: "+99 1234567890",
+  },
+  {
+    id: "3",
+    name: "Ahmad Khaidir",
+    address:
+      "3711 Spring Hill Rd undefined Tallahassee, Nevada 52874 United States",
+    phone: "+99 1234567890",
+  },
+  {
+    id: "4",
     name: "Ahmad Khaidir",
     address:
       "3711 Spring Hill Rd undefined Tallahassee, Nevada 52874 United States",
@@ -45,6 +61,7 @@ const AddressScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <HeaderComponent text="Address" showSearch={false} />
       <FlatList
         data={addresses}
         keyExtractor={(item) => item.id}
@@ -62,21 +79,19 @@ const AddressScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f8f9fa",
-    paddingHorizontal: 16,
+    backgroundColor: "white",
   },
   list: {
     paddingBottom: 16,
+    paddingHorizontal: 16,
   },
   card: {
     backgroundColor: "white",
     borderRadius: 8,
     padding: 16,
     marginBottom: 16,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    borderWidth: 0.5,
+    borderColor: Colors.light.tint,
   },
   name: {
     fontSize: 16,
@@ -120,6 +135,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#2196f3",
     paddingVertical: 12,
     borderRadius: 8,
+    marginBottom: 12,
     marginHorizontal: 16,
   },
   addButtonText: {

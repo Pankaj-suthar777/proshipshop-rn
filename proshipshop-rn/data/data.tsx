@@ -6,13 +6,13 @@ export interface ProductReview {
 }
 
 interface ProductSpecifications {
-  [key: string]: string; // Flexible key-value pairs for specifications
+  [key: string]: string;
 }
 
 export interface Product {
   id: number;
   name: string;
-  image: string; // Path to the image
+  image: string;
   price: number;
   discount_price: number;
   description: string;

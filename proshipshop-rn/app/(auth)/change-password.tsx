@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { HeaderComponent } from "../(sales)/super-flash-sale";
+import HeaderComponent from "@/components/layout/HeaderComponent";
 
 const ChangePasswordScreen = () => {
   const [oldPassword, setOldPassword] = useState("");
@@ -16,7 +16,6 @@ const ChangePasswordScreen = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleSave = () => {
-    // Handle password save logic
     console.log("Old Password:", oldPassword);
     console.log("New Password:", newPassword);
     console.log("Confirm Password:", confirmPassword);

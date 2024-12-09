@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
-import TextInputComponent from "@/components/TextInput";
+import TextInputComponent from "@/components/ui/TextInput";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import Colors from "@/constants/Colors";
 import { Link } from "expo-router";

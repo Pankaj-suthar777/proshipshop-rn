@@ -1,29 +1,20 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import Colors from "@/constants/Colors";
 import { products } from "@/data/data";
-import { useRouter } from "expo-router";
-import ProductsHorizontalList from "./ProductsHorizontalList";
+import ProductsHorizontalList from "@/components/products/ProductsHorizontalList";
 
-const FlashSaleRow = () => {
-  const router = useRouter();
-
+const MegaSaleRow = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Flash Sale</Text>
-        <TouchableOpacity
-          onPress={() => router.push("/(sales)/super-flash-sale")}
-        >
-          <Text style={styles.headerMore}>See More</Text>
-        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Mega Sale</Text>
+        <Text style={styles.headerMore}>See More</Text>
       </View>
       <ProductsHorizontalList products={products} />
     </View>
   );
 };
-
-export default FlashSaleRow;
 
 const styles = StyleSheet.create({
   container: {
@@ -45,3 +36,5 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 });
+
+export default MegaSaleRow;

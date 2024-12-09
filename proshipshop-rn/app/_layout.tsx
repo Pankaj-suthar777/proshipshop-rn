@@ -10,7 +10,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
 
-import { useColorScheme } from "@/components/useColorScheme";
+import { useColorScheme } from "@/hooks/useColorScheme";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export {
@@ -62,7 +62,6 @@ function RootLayoutNav() {
           <Stack.Screen name="(sales)" options={{ headerShown: false }} />
           <Stack.Screen name="(products)" options={{ headerShown: false }} />
           <Stack.Screen name="(profile)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
         </Stack>
       </GestureHandlerRootView>
     </ThemeProvider>

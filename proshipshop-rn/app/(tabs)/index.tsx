@@ -1,14 +1,21 @@
-import { Image, ScrollView, StyleSheet, TextInput } from "react-native";
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import Colors from "@/constants/Colors";
-import { View } from "@/components/Themed";
-import CarouselHome from "@/components/CarouselHome";
-import CategoryRow from "@/components/CategoryRow";
-import FlashSaleRow from "@/components/FlashSaleRow";
-import MegaSaleRow from "@/components/MegaSaleRow";
-import ProductsGridList from "@/components/ProductsGridList";
+import { View } from "@/components/ui/Themed";
+import CarouselHome from "@/components/home/CarouselHome";
+import CategoryRow from "@/components/home/section/CategoryRow";
+import FlashSaleRow from "@/components/home/section/FlashSaleRow";
+import MegaSaleRow from "@/components/home/section/MegaSaleRow";
+import ProductsGridList from "@/components/products/ProductsGridList";
 import { productsShoes } from "@/data/data";
+import { useRouter } from "expo-router";
 
 export default function TabOneScreen() {
   return (
@@ -39,6 +46,7 @@ export default function TabOneScreen() {
 }
 
 const SearchInputHeader = () => {
+  const router = useRouter();
   return (
     <View style={styles.headerContainer}>
       <View style={styles.row}>
@@ -55,8 +63,26 @@ const SearchInputHeader = () => {
           />
         </View>
         <View style={[styles.row, styles.iconsContainer]}>
-          <Feather name="heart" color={Colors.light.icon || "#000"} size={24} />
-          <Feather name="bell" color={Colors.light.icon || "#000"} size={24} />
+          <TouchableOpacity
+            onPress={() =>
+              router.push({ pathname: "/(profile)/favoirite-products" })
+            }
+          >
+            <Feather
+              name="heart"
+              color={Colors.light.icon || "#000"}
+              size={24}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => router.push({ pathname: "/(profile)/notifcations" })}
+          >
+            <Feather
+              name="bell"
+              color={Colors.light.icon || "#000"}
+              size={24}
+            />
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -75,18 +101,18 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between", // Align elements to opposite ends
+    justifyContent: "space-between",
   },
   searchContainer: {
-    flex: 1, // Allows the search input container to take up available space
+    flex: 1,
     gap: 8,
   },
   searchInput: {
     fontSize: 16,
-    flex: 1, // Makes the input grow to fill available space
+    flex: 1,
   },
   iconsContainer: {
     flexDirection: "row",
-    gap: 16, // Space between the icons; fallback to marginRight if unsupported
+    gap: 16,
   },
 });

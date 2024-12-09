@@ -4,24 +4,13 @@ import { View, StyleSheet, ScrollView, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HeaderComponent from "@/components/layout/HeaderComponent";
 
-const SuperFlashSaleScreen = () => {
+const FavoriteProductsScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView>
-        <HeaderComponent text="Super Flash Sale" />
+        <HeaderComponent text="Favorite Products" showSearch={false} />
 
         <View style={{ paddingHorizontal: 16 }}>
-          <Image
-            style={{
-              width: "100%",
-              height: 250,
-              marginTop: 24,
-              marginBottom: 12,
-              borderRadius: 8,
-              objectFit: "cover",
-            }}
-            source={require("@/assets/shoe-banner/5.jpg")}
-          />
           <ProductsGridList products={productsShoes} />
         </View>
       </ScrollView>
@@ -36,4 +25,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SuperFlashSaleScreen;
+export default FavoriteProductsScreen;

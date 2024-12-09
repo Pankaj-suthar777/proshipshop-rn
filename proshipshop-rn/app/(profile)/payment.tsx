@@ -7,7 +7,7 @@ import {
   FlatList,
 } from "react-native";
 import { FontAwesome5, MaterialIcons, FontAwesome } from "@expo/vector-icons";
-import { HeaderComponent } from "../(sales)/super-flash-sale";
+import HeaderComponent from "@/components/layout/HeaderComponent";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const paymentOptions = [
@@ -28,8 +28,13 @@ const paymentOptions = [
   },
 ];
 
+interface ItemProp {
+  icon: React.ReactNode;
+  name: string;
+}
+
 const PaymentScreen = () => {
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }: { item: ItemProp }) => (
     <TouchableOpacity style={styles.paymentItem}>
       <View style={{ width: 35 }}>{item.icon}</View>
       <Text style={styles.paymentText}>{item.name}</Text>

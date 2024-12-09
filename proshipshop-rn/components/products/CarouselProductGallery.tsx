@@ -15,11 +15,13 @@ import {
 
 const data = [1, 2, 3, 4, 5];
 const images = [
-  require("../assets/shoe-banner/1.jpg"),
-  require("../assets/shoe-banner/2.jpg"),
-  require("../assets/shoe-banner/3.jpg"),
-  require("../assets/shoe-banner/4.jpg"),
-  require("../assets/shoe-banner/5.jpg"),
+  require("../../assets/shoes/22.png"),
+  require("../../assets/shoes/22.png"),
+  require("../../assets/shoes/81.png"),
+  require("../../assets/shoes/70.png"),
+  require("../../assets/shoes/60.png"),
+  require("../../assets/shoes/40.png"),
+  require("../../assets/shoes/32.png"),
 ];
 
 const CustomPagination = ({ data, activeIndex, onPress }: any) => (
@@ -37,7 +39,7 @@ const CustomPagination = ({ data, activeIndex, onPress }: any) => (
   </View>
 );
 
-const CarouselHome = () => {
+const CarouselProductGallery = () => {
   const width = Dimensions.get("window").width;
   const ref = useRef<any>(null);
   const progress = useSharedValue(0);
@@ -59,13 +61,13 @@ const CarouselHome = () => {
   };
 
   return (
-    <View style={{ height: width * 0.6 }}>
+    <View style={{ height: width * 0.7 }}>
       <Carousel
         ref={ref}
         autoPlayInterval={2000}
         width={width}
         loop={true}
-        height={width / 2}
+        height={width / 1.6}
         data={data}
         snapEnabled={true}
         pagingEnabled={true}
@@ -85,7 +87,7 @@ const CarouselHome = () => {
               style={{
                 flex: 1,
                 width: "100%",
-                resizeMode: "cover",
+                resizeMode: "contain",
               }}
               source={images[index]}
             />
@@ -119,4 +121,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CarouselHome;
+export default CarouselProductGallery;

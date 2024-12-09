@@ -55,7 +55,16 @@ const AccountScreen = () => {
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerText}>Account</Text>
-        <Feather name="bell" size={20} color="#aaa" />
+        <Feather
+          name="bell"
+          size={20}
+          color="#aaa"
+          onPress={() =>
+            router.push({
+              pathname: "/(profile)/notifcations",
+            })
+          }
+        />
       </View>
 
       {/* Menu List */}

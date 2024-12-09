@@ -1,4 +1,3 @@
-import { FC } from "react";
 import {
   FlatList,
   ScrollView,
@@ -8,18 +7,16 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { HeaderComponent } from "../(sales)/super-flash-sale";
 import { useLocalSearchParams } from "expo-router";
 import { productsShoes } from "@/data/data";
-import CarouselProductGallery from "@/components/CarouselProductGallery";
+import CarouselProductGallery from "@/components/products/CarouselProductGallery";
 import Colors from "@/constants/Colors";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import ReviewSection from "@/components/ReviewSection";
-import ProductsHorizontalList from "@/components/ProductsHorizontalList";
+import ProductsHorizontalList from "@/components/products/ProductsHorizontalList";
+import HeaderComponent from "@/components/layout/HeaderComponent";
 
-interface Props {}
-
-const ProductScreen: FC<Props> = (props) => {
+const ProductScreen = () => {
   const { productId } = useLocalSearchParams();
 
   const product = productsShoes.find(

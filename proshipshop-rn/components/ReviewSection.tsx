@@ -1,14 +1,27 @@
 import React from "react";
-import { StyleSheet, Text, View, Image, FlatList } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { ProductReview } from "@/data/data";
+import { useRouter } from "expo-router";
 
 const ReviewSection = ({ reviews }: { reviews: ProductReview[] }) => {
+  const router = useRouter();
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerText}>Review Product</Text>
-        <Text style={styles.seeMore}>See More</Text>
+        <TouchableOpacity
+          onPress={() => router.push({ pathname: "/(products)/more-reviews" })}
+        >
+          <Text style={styles.seeMore}>See More</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.ratingSummary}>

@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
-import { HeaderComponent } from "../(sales)/super-flash-sale";
+import HeaderComponent from "@/components/layout/HeaderComponent";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 
@@ -12,7 +12,7 @@ const ProfileScreen = () => {
 
       <View style={styles.profileSection}>
         <Image
-          source={{ uri: "https://via.placeholder.com/100" }} // Replace with actual image link
+          source={{ uri: "https://via.placeholder.com/100" }}
           style={styles.profileImage}
         />
         <View style={styles.profileInfo}>

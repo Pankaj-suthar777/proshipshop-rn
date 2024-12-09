@@ -13,7 +13,55 @@ import {
   Entypo,
 } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { HeaderComponent } from "../(sales)/super-flash-sale";
+import HeaderComponent from "@/components/layout/HeaderComponent";
+
+interface ICategory {
+  icon: React.ReactNode;
+  name: string;
+}
+
+const CategoryScreen = () => {
+  const renderItem = ({ item }: { item: ICategory }) => (
+    <TouchableOpacity style={styles.categoryItem}>
+      <View style={{ width: 40 }}>{item.icon}</View>
+      <Text style={styles.categoryText}>{item.name}</Text>
+    </TouchableOpacity>
+  );
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <HeaderComponent text="Category" showSearch={false} />
+      <FlatList
+        data={categories}
+        keyExtractor={(item) => item.id}
+        renderItem={renderItem}
+        contentContainerStyle={styles.list}
+      />
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+  list: {
+    paddingHorizontal: 16,
+    paddingBottom: 16,
+  },
+  categoryItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 20,
+  },
+  categoryText: {
+    fontSize: 16,
+    color: "#333",
+    marginLeft: 12,
+    fontWeight: "500",
+  },
+});
 
 const categories = [
   {
@@ -29,6 +77,7 @@ const categories = [
   {
     id: "3",
     name: "Dress",
+    // @ts-ignore
     icon: <Entypo name="dress" size={24} color="#2196f3" />,
   },
   {
@@ -90,48 +139,5 @@ const categories = [
     icon: <MaterialCommunityIcons name="shoe-heel" size={24} color="#2196f3" />,
   },
 ];
-
-const CategoryScreen = () => {
-  const renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.categoryItem}>
-      <View style={{ width: 40 }}>{item.icon}</View>
-      <Text style={styles.categoryText}>{item.name}</Text>
-    </TouchableOpacity>
-  );
-
-  return (
-    <SafeAreaView style={styles.container}>
-      <HeaderComponent text="Category" showSearch={false} />
-      <FlatList
-        data={categories}
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
-        contentContainerStyle={styles.list}
-      />
-    </SafeAreaView>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  list: {
-    paddingHorizontal: 16,
-    paddingBottom: 16,
-  },
-  categoryItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: 20,
-  },
-  categoryText: {
-    fontSize: 16,
-    color: "#333",
-    marginLeft: 12,
-    fontWeight: "500",
-  },
-});
 
 export default CategoryScreen;
