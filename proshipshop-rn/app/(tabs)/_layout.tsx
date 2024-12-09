@@ -112,6 +112,7 @@ export default function TabLayout() {
         name="cart"
         options={{
           title: "Cart",
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="shopping-cart" color={color} />
           ),

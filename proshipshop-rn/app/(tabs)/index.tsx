@@ -56,14 +56,14 @@ const SearchInputHeader = () => {
             name="search"
             color={Colors.light.tint || "#000"}
             size={24}
-          />
-          {/* <Text></Text> */}
-          <TextInput
             onPress={() => router.push({ pathname: "/(products)/search" })}
-            placeholder="Search Product"
-            placeholderTextColor="#888"
-            style={styles.searchInput}
           />
+          <TouchableOpacity
+            style={{ flex: 1, marginLeft: 8 }}
+            onPress={() => router.push({ pathname: "/(products)/search" })}
+          >
+            <Text style={{ color: "#888", fontSize: 16 }}>Search Product</Text>
+          </TouchableOpacity>
         </View>
         <View style={[styles.row, styles.iconsContainer]}>
           <TouchableOpacity

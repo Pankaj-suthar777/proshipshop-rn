@@ -59,6 +59,18 @@ const RegisterScreen = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    Notifier.showNotification({
+      title: "Error",
+      description: "scsccs",
+      duration: 0,
+      showAnimationDuration: 800,
+      showEasing: Easing.bounce,
+      hideOnPress: false,
+      Component: NotifierComponents.Alert,
+      componentProps: {
+        alertType: "error",
+      },
+    });
     try {
       const { data } = await client.post("/auth/register", {
         ...values,
@@ -159,7 +171,9 @@ const RegisterScreen = () => {
         />
         <TouchableOpacity
           style={styles.signUpButton}
-          onPress={handleSubmit(onSubmit)}
+          onPress={() => {
+            handleSubmit(onSubmit);
+          }}
         >
           <Text style={styles.signUpButtonText}>Sign up</Text>
         </TouchableOpacity>

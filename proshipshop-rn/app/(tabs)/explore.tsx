@@ -42,13 +42,19 @@ const ExploreScreen: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.searchContainer}>
-        <Ionicons name="search-outline" size={20} color="#333" />
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search Product"
-          placeholderTextColor="#888"
+        <Ionicons
+          name="search-outline"
+          size={20}
+          color="#333"
           onPress={() => router.push({ pathname: "/(products)/search" })}
         />
+        <TouchableOpacity
+          onPress={() => router.push({ pathname: "/(products)/search" })}
+          style={styles.searchInput}
+        >
+          <Text style={{ fontSize: 16, color: "#666" }}>Search Product</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity
           onPress={() =>
             router.push({ pathname: "/(profile)/favoirite-products" })
@@ -110,7 +116,8 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     flex: 1,
-    marginHorizontal: 8,
+    marginHorizontal: 12,
+    marginVertical: 8,
     fontSize: 16,
     color: "#333",
   },
@@ -122,7 +129,6 @@ const styles = StyleSheet.create({
   },
   categoryList: {
     paddingHorizontal: 16,
-
     justifyContent: "center",
   },
   categoryItem: {
