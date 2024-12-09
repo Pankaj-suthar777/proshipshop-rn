@@ -10,8 +10,9 @@ import {
 
 interface TextInputComponentProps extends TextInputProps {
   Icon?: React.ReactNode;
-  containerStyle?: ViewStyle; // Style for the container
-  inputStyle?: TextStyle; // Style for the TextInput
+  containerStyle?: ViewStyle;
+  inputStyle?: TextStyle;
+  errorMsg?: string;
 }
 
 const TextInputComponent: React.FC<TextInputComponentProps> = ({
@@ -22,6 +23,7 @@ const TextInputComponent: React.FC<TextInputComponentProps> = ({
   style,
   inputStyle,
   containerStyle,
+  errorMsg,
   ...props
 }) => {
   return (

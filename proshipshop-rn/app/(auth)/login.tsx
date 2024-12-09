@@ -5,9 +5,52 @@ import { StatusBar } from "expo-status-bar";
 import Colors from "@/constants/Colors";
 import TextInputComponent from "@/components/ui/TextInput";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
+import client from "@/api/client";
+import { Keys, saveToAsyncStorage } from "@/utils/asyncStorage";
+import { useAuthStore } from "@/store/authStore";
+
+const formSchema = z.object({
+  email: z
+    .string()
+    .min(1, { message: "Please enter your email" })
+    .email({ message: "Invalid email address" }),
+  password: z.string().min(1, {
+    message: "Please enter your password",
+  }),
+});
 
 const LoginScreen = () => {
+  const router = useRouter();
+  const { setUserInfo } = useAuthStore();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const { data } = await client.post("/auth/login", {
+        ...values,
+      });
+      await saveToAsyncStorage(Keys.AUTH_TOKEN, data.token);
+      setUserInfo(data.userInfo);
+      router.replace("/(tabs)/");
+    } catch (error: any) {
+      console.log(error);
+      const errorMessage = error.response?.data?.detail;
+    }
+  };
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar backgroundColor="white" />
@@ -22,15 +65,40 @@ const LoginScreen = () => {
         </View>
       </View>
       <View style={styles.formContainer}>
-        <TextInputComponent
-          Icon={<Ionicons name="mail" color={"gray"} size={24} />}
-          placeholder="Your Email"
+        <Controller
+          control={control}
+          name={"email"}
+          render={({ field: { value, onChange } }) => (
+            <TextInputComponent
+              Icon={<Ionicons name="mail" color={"gray"} size={24} />}
+              placeholder="Your Email"
+              autoCapitalize={"none"}
+              onChange={onChange}
+              value={value}
+              errorMsg={errors.email?.message}
+            />
+          )}
         />
-        <TextInputComponent
-          Icon={<Ionicons name="lock-closed" color={"gray"} size={24} />}
-          placeholder="Password"
+        <Controller
+          control={control}
+          name={"password"}
+          render={({ field: { value, onChange } }) => (
+            <TextInputComponent
+              Icon={<Ionicons name="lock-closed" color={"gray"} size={24} />}
+              placeholder="Password"
+              secureTextEntry={true}
+              autoCapitalize={"none"}
+              onChange={onChange}
+              value={value}
+              errorMsg={errors.password?.message}
+            />
+          )}
         />
-        <TouchableOpacity style={styles.signInButton}>
+
+        <TouchableOpacity
+          style={styles.signInButton}
+          onPress={handleSubmit(onSubmit)}
+        >
           <Text style={styles.signInButtonText}>Sign in</Text>
         </TouchableOpacity>
         <View style={styles.orContainer}>

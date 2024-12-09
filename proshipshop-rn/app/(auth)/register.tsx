@@ -12,9 +12,69 @@ import { StatusBar } from "expo-status-bar";
 import TextInputComponent from "@/components/ui/TextInput";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import Colors from "@/constants/Colors";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
+import client from "@/api/client";
+import { Keys, saveToAsyncStorage } from "@/utils/asyncStorage";
+import { useAuthStore } from "@/store/authStore";
+
+const formSchema = z
+  .object({
+    name: z.string().min(1, { message: "Please enter your name" }),
+    email: z
+      .string()
+      .min(1, { message: "Please enter your email" })
+      .email({ message: "Invalid email address" }),
+    password: z
+      .string()
+      .min(1, {
+        message: "Please enter your password",
+      })
+      .min(6, {
+        message: "Password must be at least 6 characters long",
+      }),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match.",
+    path: ["confirmPassword"],
+  });
 
 const RegisterScreen = () => {
+  const router = useRouter();
+  const { setUserInfo, setIsLoggedIn } = useAuthStore();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const { data } = await client.post("/auth/register", {
+        ...values,
+      });
+
+      await saveToAsyncStorage(Keys.AUTH_TOKEN, data.token);
+
+      setUserInfo(data.userInfo);
+      setIsLoggedIn(true);
+
+      router.replace("/(tabs)/");
+    } catch (error: any) {
+      console.log(error);
+      const errorMessage = error.response?.data?.detail;
+    }
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar backgroundColor="white" />
@@ -29,23 +89,66 @@ const RegisterScreen = () => {
         </View>
       </View>
       <View style={styles.formContainer}>
-        <TextInputComponent
-          Icon={<AntDesign name="user" color={"gray"} size={24} />}
-          placeholder="Full Name"
+        <Controller
+          control={control}
+          name={"name"}
+          render={({ field: { value, onChange } }) => (
+            <TextInputComponent
+              Icon={<AntDesign name="user" color={"gray"} size={24} />}
+              placeholder="Full Name"
+              autoCapitalize={"none"}
+              onChange={onChange}
+              value={value}
+              errorMsg={errors.email?.message}
+            />
+          )}
         />
-        <TextInputComponent
-          Icon={<Ionicons name="mail" color={"gray"} size={24} />}
-          placeholder="Your Email"
+        <Controller
+          control={control}
+          name={"email"}
+          render={({ field: { value, onChange } }) => (
+            <TextInputComponent
+              Icon={<Ionicons name="mail" color={"gray"} size={24} />}
+              placeholder="Your Email"
+              autoCapitalize={"none"}
+              onChange={onChange}
+              value={value}
+              errorMsg={errors.email?.message}
+            />
+          )}
         />
-        <TextInputComponent
-          Icon={<Ionicons name="lock-closed" color={"gray"} size={24} />}
-          placeholder="Password"
+        <Controller
+          control={control}
+          name={"password"}
+          render={({ field: { value, onChange } }) => (
+            <TextInputComponent
+              Icon={<Ionicons name="lock-closed" color={"gray"} size={24} />}
+              placeholder="Password"
+              autoCapitalize={"none"}
+              onChange={onChange}
+              value={value}
+              errorMsg={errors.email?.message}
+            />
+          )}
         />
-        <TextInputComponent
-          Icon={<Ionicons name="lock-closed" color={"gray"} size={24} />}
-          placeholder="Password Again"
+        <Controller
+          control={control}
+          name={"confirmPassword"}
+          render={({ field: { value, onChange } }) => (
+            <TextInputComponent
+              Icon={<Ionicons name="lock-closed" color={"gray"} size={24} />}
+              placeholder="Password Again"
+              autoCapitalize={"none"}
+              onChange={onChange}
+              value={value}
+              errorMsg={errors.email?.message}
+            />
+          )}
         />
-        <TouchableOpacity style={styles.signUpButton}>
+        <TouchableOpacity
+          style={styles.signUpButton}
+          onPress={handleSubmit(onSubmit)}
+        >
           <Text style={styles.signUpButtonText}>Sign up</Text>
         </TouchableOpacity>
         <View style={styles.signInTextContainer}>
