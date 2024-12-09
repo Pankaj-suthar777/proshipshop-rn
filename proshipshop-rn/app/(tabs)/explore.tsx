@@ -6,7 +6,6 @@ import {
   TextInput,
   FlatList,
   TouchableOpacity,
-  Image,
 } from "react-native";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -21,7 +20,6 @@ const ExploreScreen: React.FC = () => {
     { id: 3, name: "T-Shirt", icon: "shirt-outline" },
     { id: 4, name: "Shoes", icon: "walk-outline" },
     { id: 5, name: "Pants", icon: "ios-trail-sign-outline" },
-    { id: 6, name: "Underwear", icon: "cut-outline" },
   ];
 
   const womenCategories = [
@@ -30,15 +28,15 @@ const ExploreScreen: React.FC = () => {
     { id: 3, name: "Pants", icon: "ios-trail-sign-outline" },
     { id: 4, name: "Skirt", icon: "ios-color-fill-outline" },
     { id: 5, name: "Bag", icon: "bag-outline" },
-    { id: 6, name: "Heels", icon: "woman-outline" },
-    { id: 7, name: "Bikini", icon: "woman-outline" },
   ];
 
   const renderCategory = ({ item }: { item: any }) => (
-    <View style={styles.categoryItem}>
-      <Ionicons name={item.icon} size={32} color="#00BFFF" />
+    <TouchableOpacity style={styles.categoryItem}>
+      <View style={styles.iconContainer}>
+        <Ionicons name={item.icon} size={26} color="#00BFFF" />
+      </View>
       <Text style={styles.categoryText}>{item.name}</Text>
-    </View>
+    </TouchableOpacity>
   );
 
   return (
@@ -49,6 +47,7 @@ const ExploreScreen: React.FC = () => {
           style={styles.searchInput}
           placeholder="Search Product"
           placeholderTextColor="#888"
+          onPress={() => router.push({ pathname: "/(products)/search" })}
         />
         <TouchableOpacity
           onPress={() =>
@@ -66,7 +65,7 @@ const ExploreScreen: React.FC = () => {
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderCategory}
         horizontal={false}
-        numColumns={3}
+        numColumns={4}
         contentContainerStyle={styles.categoryList}
       />
 
@@ -76,7 +75,7 @@ const ExploreScreen: React.FC = () => {
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderCategory}
         horizontal={false}
-        numColumns={3}
+        numColumns={4}
         contentContainerStyle={styles.categoryList}
       />
     </SafeAreaView>
@@ -119,8 +118,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     marginVertical: 10,
     fontSize: 18,
-    fontWeight: "600",
-    color: "#333",
+    fontWeight: "700",
   },
   categoryList: {
     paddingHorizontal: 16,
@@ -128,14 +126,24 @@ const styles = StyleSheet.create({
   },
   categoryItem: {
     alignItems: "center",
+    justifyContent: "center",
     margin: 8,
-    width: "30%",
+    width: "20%",
   },
   categoryText: {
     marginTop: 8,
     fontSize: 14,
     fontWeight: "500",
     color: "#666",
+  },
+  iconContainer: {
+    height: 70,
+    width: 70,
+    borderWidth: 0.8,
+    borderColor: Colors.light.tint,
+    borderRadius: 30,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

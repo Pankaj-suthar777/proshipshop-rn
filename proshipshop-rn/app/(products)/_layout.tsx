@@ -8,6 +8,7 @@ export default function AuthLayout() {
       <Stack.Screen name="categories" />
       <Stack.Screen name="more-reviews" />
       <Stack.Screen name="write-review" />
+      <Stack.Screen name="search" />
     </Stack>
   );
 }

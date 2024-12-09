@@ -57,6 +57,7 @@ const SearchInputHeader = () => {
             size={24}
           />
           <TextInput
+            onPress={() => router.push({ pathname: "/(products)/search" })}
             placeholder="Search Product"
             placeholderTextColor="#888"
             style={styles.searchInput}
