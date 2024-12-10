@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -16,32 +16,13 @@ import { Link, useRouter } from "expo-router";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
-import client from "@/api/client";
 import { Keys, saveToAsyncStorage } from "@/utils/asyncStorage";
 import { useAuthStore } from "@/store/authStore";
-import { Notifier, Easing, NotifierComponents } from "react-native-notifier";
-
-const formSchema = z
-  .object({
-    name: z.string().min(1, { message: "Please enter your name" }),
-    email: z
-      .string()
-      .min(1, { message: "Please enter your email" })
-      .email({ message: "Invalid email address" }),
-    password: z
-      .string()
-      .min(1, {
-        message: "Please enter your password",
-      })
-      .min(6, {
-        message: "Password must be at least 6 characters long",
-      }),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match.",
-    path: ["confirmPassword"],
-  });
+import { Notifier, Easing } from "react-native-notifier";
+import { registerSchema } from "@/zod-schemas/user.schemas";
+import { useMutation } from "@apollo/client";
+import { REGISTER_USER_MUTATION } from "@/graphql/mutations/user.mutations";
+import { errorToast, errorWrapper } from "@/utils/helpers";
 
 const RegisterScreen = () => {
   const router = useRouter();
@@ -49,54 +30,52 @@ const RegisterScreen = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+    formState: { errors },
+  } = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    Notifier.showNotification({
-      title: "Error",
-      description: "scsccs",
-      duration: 0,
-      showAnimationDuration: 800,
-      showEasing: Easing.bounce,
-      hideOnPress: false,
-      Component: NotifierComponents.Alert,
-      componentProps: {
-        alertType: "error",
+  const [registerUser, { loading, error }] = useMutation(
+    REGISTER_USER_MUTATION,
+    {
+      onCompleted: () => {
+        Notifier.showNotification({
+          title: "Account created.",
+          description: "You can now log in to your account.",
+          duration: 0,
+          showAnimationDuration: 800,
+          showEasing: Easing.bounce,
+          hideOnPress: false,
+          translucentStatusBar: true,
+        });
       },
-    });
-    try {
-      const { data } = await client.post("/auth/register", {
-        ...values,
-      });
-
-      await saveToAsyncStorage(Keys.AUTH_TOKEN, data.token);
-
-      setUserInfo(data.userInfo);
-      setIsLoggedIn(true);
-
-      router.replace("/(tabs)/");
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.detail;
-      Notifier.showNotification({
-        title: "Error",
-        description: errorMessage ? errorMessage : error.message,
-        duration: 0,
-        showAnimationDuration: 800,
-        showEasing: Easing.bounce,
-        hideOnPress: false,
-        Component: NotifierComponents.Alert,
-        componentProps: {
-          alertType: "error",
-        },
-      });
     }
+  );
+
+  useEffect(() => {
+    if (error) errorToast(error);
+  }, [error]);
+
+  const onSubmit = async (values: z.infer<typeof registerSchema>) => {
+    const userInput = {
+      username: values.name,
+      email: values.email,
+      password: values.password,
+    };
+
+    await errorWrapper(async () => {
+      await registerUser({
+        variables: { userInput },
+      });
+    });
+    // await saveToAsyncStorage(Keys.AUTH_TOKEN, data.token);
+    // setUserInfo(data.userInfo);
+    setIsLoggedIn(true);
+    // router.replace("/(tabs)/");
   };
 
   return (
@@ -116,30 +95,34 @@ const RegisterScreen = () => {
         <Controller
           control={control}
           name={"name"}
-          render={({ field: { value, onChange } }) => (
-            <TextInputComponent
-              Icon={<AntDesign name="user" color={"gray"} size={24} />}
-              placeholder="Full Name"
-              autoCapitalize={"none"}
-              onChange={onChange}
-              value={value}
-              errorMsg={errors.email?.message}
-            />
-          )}
+          render={({ field: { value, onChange } }) => {
+            return (
+              <TextInputComponent
+                Icon={<AntDesign name="user" color={"gray"} size={24} />}
+                placeholder="Full Name"
+                autoCapitalize={"none"}
+                onChangeText={onChange}
+                value={value}
+                errorMsg={errors.name?.message}
+              />
+            );
+          }}
         />
         <Controller
           control={control}
           name={"email"}
-          render={({ field: { value, onChange } }) => (
-            <TextInputComponent
-              Icon={<Ionicons name="mail" color={"gray"} size={24} />}
-              placeholder="Your Email"
-              autoCapitalize={"none"}
-              onChange={onChange}
-              value={value}
-              errorMsg={errors.email?.message}
-            />
-          )}
+          render={({ field: { value, onChange } }) => {
+            return (
+              <TextInputComponent
+                Icon={<Ionicons name="mail" color={"gray"} size={24} />}
+                placeholder="Your Email"
+                autoCapitalize={"none"}
+                onChangeText={onChange}
+                value={value}
+                errorMsg={errors.email?.message}
+              />
+            );
+          }}
         />
         <Controller
           control={control}
@@ -149,9 +132,9 @@ const RegisterScreen = () => {
               Icon={<Ionicons name="lock-closed" color={"gray"} size={24} />}
               placeholder="Password"
               autoCapitalize={"none"}
-              onChange={onChange}
+              onChangeText={onChange}
               value={value}
-              errorMsg={errors.email?.message}
+              errorMsg={errors.password?.message}
             />
           )}
         />
@@ -163,19 +146,20 @@ const RegisterScreen = () => {
               Icon={<Ionicons name="lock-closed" color={"gray"} size={24} />}
               placeholder="Password Again"
               autoCapitalize={"none"}
-              onChange={onChange}
+              onChangeText={onChange}
               value={value}
-              errorMsg={errors.email?.message}
+              errorMsg={errors.confirmPassword?.message}
             />
           )}
         />
         <TouchableOpacity
           style={styles.signUpButton}
-          onPress={() => {
-            handleSubmit(onSubmit);
-          }}
+          onPress={() => handleSubmit(onSubmit)()}
+          disabled={loading}
         >
-          <Text style={styles.signUpButtonText}>Sign up</Text>
+          <Text style={styles.signUpButtonText}>
+            {loading ? "Loading..." : "Sign up"}
+          </Text>
         </TouchableOpacity>
         <View style={styles.signInTextContainer}>
           <Text style={styles.signInText}>
@@ -195,6 +179,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "white",
     paddingHorizontal: 18,
   },
   header: {

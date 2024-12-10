@@ -6,6 +6,7 @@ import {
   TextInputProps,
   ViewStyle,
   TextStyle,
+  Text,
 } from "react-native";
 
 interface TextInputComponentProps extends TextInputProps {
@@ -27,17 +28,26 @@ const TextInputComponent: React.FC<TextInputComponentProps> = ({
   ...props
 }) => {
   return (
-    <View style={[styles.container, containerStyle]}>
-      {Icon ? <View style={{ padding: 4 }}>{Icon}</View> : null}
+    <>
+      <View
+        style={[
+          styles.container,
+          containerStyle,
+          errorMsg ? styles.errorStyle : {},
+        ]}
+      >
+        {Icon ? <View style={{ padding: 4 }}>{Icon}</View> : null}
 
-      <TextInput
-        style={[styles.input, inputStyle, style]}
-        placeholder={placeholder}
-        value={value}
-        onChangeText={onChangeText}
-        {...props}
-      />
-    </View>
+        <TextInput
+          style={[styles.input, inputStyle, style]}
+          placeholder={placeholder}
+          value={value}
+          onChangeText={onChangeText}
+          {...props}
+        />
+      </View>
+      {errorMsg && <Text style={{ color: "red" }}>{errorMsg}</Text>}
+    </>
   );
 };
 
@@ -57,6 +67,10 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     fontSize: 16,
+  },
+  errorStyle: {
+    borderColor: "red",
+    borderWidth: 1,
   },
 });
 

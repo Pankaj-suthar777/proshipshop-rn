@@ -12,16 +12,7 @@ import { Controller, useForm } from "react-hook-form";
 import client from "@/api/client";
 import { Keys, saveToAsyncStorage } from "@/utils/asyncStorage";
 import { useAuthStore } from "@/store/authStore";
-
-const formSchema = z.object({
-  email: z
-    .string()
-    .min(1, { message: "Please enter your email" })
-    .email({ message: "Invalid email address" }),
-  password: z.string().min(1, {
-    message: "Please enter your password",
-  }),
-});
+import { loginSchema } from "@/zod-schemas/user.schemas";
 
 const LoginScreen = () => {
   const router = useRouter();
@@ -30,15 +21,15 @@ const LoginScreen = () => {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  } = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
       const { data } = await client.post("/auth/login", {
         ...values,

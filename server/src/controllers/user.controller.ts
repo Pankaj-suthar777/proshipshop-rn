@@ -1,7 +1,6 @@
 import { Response } from "express";
 import catchAsyncErrors from "#/middlewares/catchAsyncErrors";
 import * as bcrypt from "bcryptjs";
-
 import jwt from "jsonwebtoken";
 import { uploadImageToCloudinary } from "#/utils/cloudinary";
 import APIFilters from "#/utils/apiFilters";

@@ -30,5 +30,5 @@ export async function startApolloServer(app: Application) {
     listen: { port: 4000 },
     context: async ({ req, res }) => ({ token: req.headers.token, res }),
   });
-  console.log(`🚀  Server ready at: ${url}`);
+  console.log(`🚀 Server ready at: ${url}`);
 }

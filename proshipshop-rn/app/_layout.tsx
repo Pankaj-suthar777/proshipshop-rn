@@ -13,6 +13,8 @@ import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { NotifierWrapper } from "react-native-notifier";
+import { ApolloProvider } from "@apollo/client";
+import client from "@/apollo/apolloClient";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -55,13 +57,18 @@ function RootLayoutNav() {
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <GestureHandlerRootView>
         <NotifierWrapper>
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-            <Stack.Screen name="(sales)" options={{ headerShown: false }} />
-            <Stack.Screen name="(products)" options={{ headerShown: false }} />
-            <Stack.Screen name="(profile)" options={{ headerShown: false }} />
-          </Stack>
+          <ApolloProvider client={client}>
+            <Stack>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+              <Stack.Screen name="(sales)" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="(products)"
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen name="(profile)" options={{ headerShown: false }} />
+            </Stack>
+          </ApolloProvider>
         </NotifierWrapper>
       </GestureHandlerRootView>
     </ThemeProvider>
