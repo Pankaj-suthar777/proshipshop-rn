@@ -23,12 +23,11 @@ const AddAddressScreen = () => {
     phoneNumber: "",
   });
 
-  const handleInputChange = (name, value) => {
+  const handleInputChange = (name: string, value: any) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleAddAddress = () => {
-    // Handle form submission logic
     console.log("Address added:", formData);
   };
 
