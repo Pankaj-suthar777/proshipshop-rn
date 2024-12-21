@@ -14,7 +14,7 @@ const HeaderComponent = ({
   return (
     <View
       style={{
-        height: 80,
+        height: 60,
         justifyContent: "center",
         marginHorizontal: 16,
       }}
@@ -44,8 +44,9 @@ const HeaderComponent = ({
         {showSearch && (
           <TouchableOpacity
             onPress={() => router.push({ pathname: "/(products)/search" })}
+            style={{ marginHorizontal: 8 }}
           >
-            <Feather name="search" color={Colors.light.icon} size={28} />
+            <Feather name="search" color={Colors.light.icon} size={24} />
           </TouchableOpacity>
         )}
       </View>

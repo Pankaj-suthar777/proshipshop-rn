@@ -51,7 +51,13 @@ const ProductsGridList = ({ products }: Props) => {
               </View>
 
               <View>
-                <Text style={styles.productName}>{item.name}</Text>
+                <Text
+                  style={styles.productName}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                >
+                  {item.name}
+                </Text>
               </View>
               <View style={styles.ratingContainer}>
                 {[1, 2, 3, 4, 5].map((_, i) => (
@@ -84,10 +90,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    gap: 8,
+    rowGap: 12,
   },
   productContainer: {
-    width: "48.9%",
+    width: "48%",
     borderWidth: 0.6,
     borderColor: Colors.light.tint,
     padding: 12,

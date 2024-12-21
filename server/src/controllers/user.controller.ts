@@ -21,7 +21,6 @@ export const registerUser = catchAsyncErrors(async (userInput: UserInput) => {
 export const login = catchAsyncErrors(
   async (email: string, password: string, res: Response) => {
     const user = await User.findOne({ email }).select("+password");
-
     if (!user) {
       throw new Error("Invalid Email or Password");
     }

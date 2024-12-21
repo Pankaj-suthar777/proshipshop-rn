@@ -12,6 +12,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 
 const SearchScreen: React.FC = () => {
+  const router = useRouter();
   const data = [
     "Nike Air Max 270 React ENG",
     "Nike Air Vapormax 360",
@@ -31,7 +32,9 @@ const SearchScreen: React.FC = () => {
           placeholderTextColor="#999"
         />
         <View style={{ flexDirection: "row", gap: 8 }}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => router.push({ pathname: "/(products)/products" })}
+          >
             <Feather name="x" size={24} color="#666" />
           </TouchableOpacity>
           <TouchableOpacity>

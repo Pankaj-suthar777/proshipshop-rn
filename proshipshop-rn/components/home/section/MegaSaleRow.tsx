@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 8,
+    alignItems: "center",
   },
   headerTitle: {
     fontSize: 20,
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   headerMore: {
-    fontSize: 20,
+    fontSize: 16,
     color: Colors.light.tint,
     fontWeight: "700",
   },

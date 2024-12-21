@@ -30,6 +30,11 @@ const userTypeDefs = `#graphql
     email: String!
   }
 
+  type AdminUser {
+    user_info: User
+    token: String
+  }
+
   type Mutation {
     registerUser(userInput: UserInput!): User
     login(email: String!, password: String!): User
@@ -37,6 +42,7 @@ const userTypeDefs = `#graphql
     updatePassword(oldPassword: String!, newPassword: String!): Boolean
     uploadUserAvatar(avatar: String!): Boolean
     deleteUser(userId: String!): Boolean
+    adminLogin(email: String!, password: String!): AdminUser
   }
 `;
 

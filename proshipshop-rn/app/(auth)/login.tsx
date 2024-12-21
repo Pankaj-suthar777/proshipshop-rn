@@ -1,5 +1,12 @@
-import React from "react";
-import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
+import React, { useEffect } from "react";
+import {
+  View,
+  StyleSheet,
+  Image,
+  Text,
+  TouchableOpacity,
+  Easing,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import Colors from "@/constants/Colors";
@@ -13,6 +20,10 @@ import client from "@/api/client";
 import { Keys, saveToAsyncStorage } from "@/utils/asyncStorage";
 import { useAuthStore } from "@/store/authStore";
 import { loginSchema } from "@/zod-schemas/user.schemas";
+import { useMutation } from "@apollo/client";
+import { LOGIN_MUTATION } from "@/graphql/mutations/user.mutations";
+import { Notifier } from "react-native-notifier";
+import { errorToast, errorWrapper } from "@/utils/helpers";
 
 const LoginScreen = () => {
   const router = useRouter();
@@ -29,18 +40,36 @@ const LoginScreen = () => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof loginSchema>) => {
-    try {
-      const { data } = await client.post("/auth/login", {
-        ...values,
+  const [loginUser, { loading, error }] = useMutation(LOGIN_MUTATION, {
+    onCompleted: () => {
+      Notifier.showNotification({
+        title: "Login successfull",
+        duration: 3000,
+        showAnimationDuration: 800,
+        hideOnPress: false,
+        translucentStatusBar: true,
       });
-      await saveToAsyncStorage(Keys.AUTH_TOKEN, data.token);
-      setUserInfo(data.userInfo);
-      router.replace("/(tabs)/");
-    } catch (error: any) {
-      console.log(error);
-      const errorMessage = error.response?.data?.detail;
-    }
+    },
+  });
+
+  useEffect(() => {
+    if (error) errorToast(error);
+  }, [error]);
+
+  const onSubmit = async (values: z.infer<typeof loginSchema>) => {
+    // await saveToAsyncStorage(Keys.AUTH_TOKEN, data.token);
+    // setUserInfo(data.userInfo);
+    // router.replace("/(tabs)/");
+    const userInput = {
+      email: values.email,
+      password: values.password,
+    };
+
+    await errorWrapper(async () => {
+      await loginUser({
+        variables: { ...userInput },
+      });
+    });
   };
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -64,7 +93,7 @@ const LoginScreen = () => {
               Icon={<Ionicons name="mail" color={"gray"} size={24} />}
               placeholder="Your Email"
               autoCapitalize={"none"}
-              onChange={onChange}
+              onChangeText={onChange}
               value={value}
               errorMsg={errors.email?.message}
             />
@@ -79,7 +108,7 @@ const LoginScreen = () => {
               placeholder="Password"
               secureTextEntry={true}
               autoCapitalize={"none"}
-              onChange={onChange}
+              onChangeText={onChange}
               value={value}
               errorMsg={errors.password?.message}
             />
@@ -88,9 +117,12 @@ const LoginScreen = () => {
 
         <TouchableOpacity
           style={styles.signInButton}
-          onPress={handleSubmit(onSubmit)}
+          onPress={() => handleSubmit(onSubmit)()}
+          disabled={loading}
         >
-          <Text style={styles.signInButtonText}>Sign in</Text>
+          <Text style={styles.signInButtonText}>
+            {loading ? "Loading..." : "Sign in"}
+          </Text>
         </TouchableOpacity>
         <View style={styles.orContainer}>
           <View style={styles.line} />

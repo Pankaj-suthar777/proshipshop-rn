@@ -127,6 +127,7 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   list: {
+    paddingTop: 20,
     paddingHorizontal: 16,
   },
   reviewWrapper: {

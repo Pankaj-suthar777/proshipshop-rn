@@ -13,20 +13,23 @@ import { Ionicons } from "@expo/vector-icons";
 
 interface Props {
   products: Product[];
+  headerComponent?:
+    | React.ComponentType<any>
+    | React.ReactElement<any, string | React.JSXElementConstructor<any>>;
 }
 
-const ProductsList = ({ products }: Props) => {
+const ProductsList = ({ products, headerComponent }: Props) => {
   const width = Dimensions.get("window").width;
 
   return (
     <FlatList
+      showsVerticalScrollIndicator={false}
+      ListHeaderComponent={headerComponent}
       numColumns={2}
       columnWrapperStyle={{
         justifyContent: "space-between",
-        gap: 8,
       }}
-      contentContainerStyle={{ gap: 24 }}
-      style={{ marginTop: 12, marginBottom: 24 }}
+      contentContainerStyle={{ rowGap: 12 }}
       data={products}
       showsHorizontalScrollIndicator={false}
       renderItem={({ item }) => {
@@ -40,7 +43,7 @@ const ProductsList = ({ products }: Props) => {
               width: "48%",
               borderWidth: 0.6,
               borderColor: Colors.light.tint,
-              height: width / 1.4,
+              height: width / 1.2,
               padding: 12,
               borderRadius: 6,
             }}
@@ -57,6 +60,8 @@ const ProductsList = ({ products }: Props) => {
                 marginBottom: 8,
                 fontSize: 14,
               }}
+              numberOfLines={1}
+              ellipsizeMode="tail"
             >
               {item.name}
             </Text>

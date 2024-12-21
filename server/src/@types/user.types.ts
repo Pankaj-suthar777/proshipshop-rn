@@ -16,3 +16,11 @@ export type UserInput = {
   password: string;
   phoneNo: string;
 };
+
+export interface IAdminUser {
+  _id: string;
+  email: string;
+  password: string;
+  createdAt: string;
+  updatedAt: string;
+}

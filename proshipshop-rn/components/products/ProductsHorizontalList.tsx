@@ -45,7 +45,13 @@ const ProductsHorizontalList: FC<Props> = ({ products }) => {
               </TouchableOpacity>
 
               <TouchableOpacity>
-                <Text style={styles.productName}>{item.name}</Text>
+                <Text
+                  style={styles.productName}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                >
+                  {item.name}
+                </Text>
               </TouchableOpacity>
               <Text style={styles.productPrice}>${item.price}</Text>
               <View style={styles.discountContainer}>

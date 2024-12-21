@@ -1,4 +1,5 @@
 import { IUser, UserInput } from "#/@types/user.types";
+import { adminLogin } from "#/controllers/admin.controller";
 import {
   deleteUser,
   getAllUsers,
@@ -35,6 +36,13 @@ export const userResolvers = {
       { res }: { res: Response }
     ) => {
       return login(email, password, res);
+    },
+    adminLogin: async (
+      _: any,
+      { email, password }: { email: string; password: string },
+      { res }: { res: Response }
+    ) => {
+      return adminLogin(email, password, res);
     },
     updateUserProfile: async (
       _: any,

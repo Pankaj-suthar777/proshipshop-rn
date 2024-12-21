@@ -128,14 +128,13 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   categoryList: {
-    paddingHorizontal: 16,
     justifyContent: "center",
   },
   categoryItem: {
     alignItems: "center",
     justifyContent: "center",
     margin: 8,
-    width: "18%",
+    width: "20%",
   },
   categoryText: {
     marginTop: 8,

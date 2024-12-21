@@ -9,6 +9,7 @@ export default function AuthLayout() {
       <Stack.Screen name="more-reviews" />
       <Stack.Screen name="write-review" />
       <Stack.Screen name="search" />
+      <Stack.Screen name="products" />
     </Stack>
   );
 }
